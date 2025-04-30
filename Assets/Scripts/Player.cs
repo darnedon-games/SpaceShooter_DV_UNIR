@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float velocidad;
     private float velocidadInicial;
-    [SerializeField] private GameObject disparoPrefab;
-    [SerializeField] private GameObject spawnPointUp;
-    [SerializeField] private GameObject spawnPointDown;
+    [SerializeField] private Disparo disparoPrefab;
+    [SerializeField] private Transform[] spawnsPoint;
     [SerializeField] private float ratioDisparo;
     private float temporizador = 0.5f;
     private float vidas = 100;
@@ -28,6 +29,33 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private GameObject pauseCanvas;
+
+    private ObjectPool<Disparo> disparoPool;
+
+    private void Awake()
+    {
+        disparoPool = new ObjectPool<Disparo>(CrearDisparo, CogerDisparo, DejarDisparo);
+    }
+
+    // Este método se llamará cuando se necesite una bala nueva
+    private Disparo CrearDisparo()
+    {
+        Disparo copiaDisparo = Instantiate(disparoPrefab);
+        copiaDisparo.MiPool = disparoPool; // Al disparo que ha nacido le comunico quién es su piscina para después liberarse
+        return copiaDisparo;
+    }
+
+    // Este método se llamará cuando se necesite reciclar una bala ya existente
+    private void CogerDisparo(Disparo disparo)
+    {
+        disparo.gameObject.SetActive(true);
+    }
+
+    // Este método se llamará de forma automática cuando una bala tenga que ser devuelta a la piscina
+    private void DejarDisparo(Disparo disparo)
+    {
+        disparo.gameObject.SetActive(false);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -73,8 +101,13 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && temporizador > ratioDisparo)
         {
             sound.PlayOneShot(shootSound,0.8f);
-            Instantiate(disparoPrefab, spawnPointUp.transform.position, Quaternion.identity);
-            Instantiate(disparoPrefab, spawnPointDown.transform.position, Quaternion.identity);
+            
+            for (int i = 0; i<2; i++)
+            {
+                Disparo copia = disparoPool.Get(); // Dame una bala
+                copia.transform.position = spawnsPoint[i].position;
+            }
+
             temporizador = 0;
         }
     }

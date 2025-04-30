@@ -51,7 +51,7 @@ public class Enemigo : MonoBehaviour
         }
         else if (elOtro.gameObject.CompareTag("Wall"))
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }

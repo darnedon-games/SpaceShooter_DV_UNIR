@@ -1,13 +1,9 @@
 using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.Windows;
 
-public class Disparo : MonoBehaviour
+public class DisparoEnemigo : MonoBehaviour
 {
     [SerializeField] private float velocidad;
     [SerializeField] private Vector3 direccion;
-
-    public ObjectPool<Disparo> MiPool { get; set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +21,7 @@ public class Disparo : MonoBehaviour
     {
         if (elOtro.gameObject.CompareTag("Wall"))
         {
-            MiPool.Release(this);
+            this.gameObject.SetActive(false);
         }
     }
 }

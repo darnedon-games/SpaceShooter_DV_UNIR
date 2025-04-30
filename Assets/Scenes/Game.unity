@@ -2453,9 +2453,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidad: 5
-  disparoPrefab: {fileID: 9137516189784701574, guid: 10cd5f27838fb0944af0d6a6f21188e9, type: 3}
-  spawnPointUp: {fileID: 533676990}
-  spawnPointDown: {fileID: 2094949871}
+  disparoPrefab: {fileID: 2042472845825504932, guid: 10cd5f27838fb0944af0d6a6f21188e9, type: 3}
+  spawnsPoint:
+  - {fileID: 533676991}
+  - {fileID: 2094949872}
   ratioDisparo: 0.5
   textoLives: {fileID: 312674464}
   textoScore: {fileID: 942984303}
