@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float velocidad;
     private float velocidadInicial;
     [SerializeField] private Disparo disparoPrefab;
-    [SerializeField] private Transform[] spawnsPoint;
+    [SerializeField] private Transform spawnPoint;
     [SerializeField] private float ratioDisparo;
     private float temporizador = 0.5f;
     private float vidas = 100;
@@ -102,11 +102,8 @@ public class Player : MonoBehaviour
         {
             sound.PlayOneShot(shootSound,0.8f);
             
-            for (int i = 0; i<2; i++)
-            {
-                Disparo copia = disparoPool.Get(); // Dame una bala
-                copia.transform.position = spawnsPoint[i].position;
-            }
+            Disparo copia = disparoPool.Get(); // Dame una bala
+            copia.transform.position = spawnPoint.position;
 
             temporizador = 0;
         }

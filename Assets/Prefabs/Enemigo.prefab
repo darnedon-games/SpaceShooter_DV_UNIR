@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidad: 5
-  disparoPrefab: {fileID: 9137516189784701574, guid: 749ec42c1388e724d8de723acb7e8794, type: 3}
-  spawnPoint: {fileID: 3245990068317303447}
+  disparoPrefab: {fileID: 2230980549310036183, guid: 749ec42c1388e724d8de723acb7e8794, type: 3}
+  spawnPoint: {fileID: 6979158211724557563}
   explosionPrefab: {fileID: 6781396514528249212, guid: 6aa7c6f80f9390e43bc8df2d4982b977, type: 3}
 --- !u!50 &5111384210457364401
 Rigidbody2D:

@@ -6,13 +6,37 @@ using UnityEngine.Pool;
 public class Enemigo : MonoBehaviour
 {
     [SerializeField] private float velocidad;
-    [SerializeField] private GameObject disparoPrefab;
-    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private DisparoEnemigo disparoPrefab;
+    [SerializeField] private Transform spawnPoint;
     [SerializeField] private GameObject explosionPrefab;
 
     public ObjectPool<Enemigo> MiPoolEnemigo { get; set; }
 
     private bool corrutinaRunning = false;
+
+    private ObjectPool<DisparoEnemigo> disparoEnemigoPool;
+
+    private void Awake()
+    {
+        disparoEnemigoPool = new ObjectPool<DisparoEnemigo>(CrearDisparoEnemigo, CogerDisparoEnemigo, DejarDisparoEnemigo);
+    }
+
+    private DisparoEnemigo CrearDisparoEnemigo()
+    {
+        DisparoEnemigo copiaDisparoEnemigo = Instantiate(disparoPrefab);
+        copiaDisparoEnemigo.PoolDisparoEnemigo = disparoEnemigoPool;
+        return copiaDisparoEnemigo;
+    }
+
+    private void CogerDisparoEnemigo(DisparoEnemigo disparoEnemigo)
+    {
+        disparoEnemigo.gameObject.SetActive(true);
+    }
+
+    private void DejarDisparoEnemigo(DisparoEnemigo disparoEnemigo)
+    {
+        disparoEnemigo.gameObject.SetActive(false);
+    }
 
     private void OnEnable()
     {
@@ -50,7 +74,9 @@ public class Enemigo : MonoBehaviour
     {
         while(corrutinaRunning)
         {
-            Instantiate(disparoPrefab, spawnPoint.transform.position, Quaternion.identity);
+            DisparoEnemigo copia = disparoEnemigoPool.Get();
+            copia.transform.position = spawnPoint.position;
+            //Instantiate(disparoPrefab, spawnPoint.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
         }
     }

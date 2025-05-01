@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class DisparoEnemigo : MonoBehaviour
 {
     [SerializeField] private float velocidad;
     [SerializeField] private Vector3 direccion;
+
+    public ObjectPool<DisparoEnemigo> PoolDisparoEnemigo { get; set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,7 +24,7 @@ public class DisparoEnemigo : MonoBehaviour
     {
         if (elOtro.gameObject.CompareTag("Wall"))
         {
-            this.gameObject.SetActive(false);
+            PoolDisparoEnemigo.Release(this);
         }
     }
 }
