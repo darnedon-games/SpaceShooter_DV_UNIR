@@ -4807,7 +4807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc8c2615a2776e4f85d72c6d7b5e033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemigoPrefab: {fileID: 2627284166622219802, guid: 8e23742aed59a584085ab78d2075c799, type: 3}
+  enemigoPrefab: {fileID: -6131564343927251555, guid: 8e23742aed59a584085ab78d2075c799, type: 3}
   textoOleadas: {fileID: 597869163}
   winnerCanvas: {fileID: 727630324}
 --- !u!4 &1665836971

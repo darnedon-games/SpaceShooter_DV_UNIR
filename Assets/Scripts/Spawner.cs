@@ -1,12 +1,37 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemigoPrefab;
+    [SerializeField] private Enemigo enemigoPrefab;
     [SerializeField] private TextMeshProUGUI textoOleadas;
     [SerializeField] private GameObject winnerCanvas;
+
+    private ObjectPool<Enemigo> enemigoPool;
+
+    private void Awake()
+    {
+        enemigoPool = new ObjectPool<Enemigo>(CrearEnemigo, CogerEnemigo, DejarEnemigo);
+    }
+
+    private Enemigo CrearEnemigo()
+    {
+        Enemigo copiaEnemigo = Instantiate(enemigoPrefab);
+        copiaEnemigo.MiPoolEnemigo = enemigoPool;
+        return copiaEnemigo;
+    }
+
+    private void CogerEnemigo(Enemigo enemigo)
+    {
+        enemigo.gameObject.SetActive(true);
+    }
+
+    private void DejarEnemigo(Enemigo enemigo)
+    {
+        enemigo.gameObject.SetActive(false);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +57,8 @@ public class Spawner : MonoBehaviour
                 for (int k = 0; k < 10; k++) // Enemigos
                 {
                     Vector3 puntoAleatorio = new Vector3(transform.position.x, Random.Range(-4.5f, 4.5f), 0);
-                    Instantiate(enemigoPrefab, puntoAleatorio, Quaternion.identity);
+                    Enemigo copia = enemigoPool.Get();
+                    copia.transform.position = puntoAleatorio;
                     yield return new WaitForSeconds(0.5f);
                 }
                 yield return new WaitForSeconds(2f);

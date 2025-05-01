@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Enemigo : MonoBehaviour
 {
@@ -9,11 +10,35 @@ public class Enemigo : MonoBehaviour
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject explosionPrefab;
 
+    public ObjectPool<Enemigo> MiPoolEnemigo { get; set; }
+
+    private bool corrutinaRunning = false;
+
+    private void OnEnable()
+    {
+        if (!corrutinaRunning)
+        {
+            corrutinaRunning = true;
+            StartCoroutine(Disparar());
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (corrutinaRunning)
+        {
+            StopCoroutine(Disparar());
+            corrutinaRunning = false;
+        }
+    }
+
+    /*
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StartCoroutine(Disparar());
     }
+    */
 
     // Update is called once per frame
     void Update()
@@ -23,7 +48,7 @@ public class Enemigo : MonoBehaviour
 
     IEnumerator Disparar()
     {
-        while(true)
+        while(corrutinaRunning)
         {
             Instantiate(disparoPrefab, spawnPoint.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(1f);
@@ -35,7 +60,7 @@ public class Enemigo : MonoBehaviour
         {
             Destroy(elOtro.gameObject);
             Vector3 deathEnemyPoint = this.transform.position;
-            Destroy(this.gameObject);
+            MiPoolEnemigo.Release(this);
             Instantiate(explosionPrefab, deathEnemyPoint, Quaternion.identity); // Instanciamos la explosión en el último punto donde estuvo el enemigo antes de morir
 
             // Sumamos puntuación desde un método de la clase Player
@@ -51,7 +76,7 @@ public class Enemigo : MonoBehaviour
         }
         else if (elOtro.gameObject.CompareTag("Wall"))
         {
-            this.gameObject.SetActive(false);
+            MiPoolEnemigo.Release(this);
         }
     }
 }
