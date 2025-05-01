@@ -2422,9 +2422,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidad: 5
   disparoPrefab: {fileID: 2042472845825504932, guid: 10cd5f27838fb0944af0d6a6f21188e9, type: 3}
-  spawnsPoint:
-  - {fileID: 0}
-  - {fileID: 2094949872}
+  spawnPoint: {fileID: 2094949872}
   ratioDisparo: 0.5
   textoLives: {fileID: 312674464}
   textoScore: {fileID: 942984303}
