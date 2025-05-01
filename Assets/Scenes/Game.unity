@@ -1822,7 +1822,7 @@ GameObject:
   - component: {fileID: 575535592}
   - component: {fileID: 575535591}
   m_Layer: 5
-  m_Name: TextGameOver
+  m_Name: TextPause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3092,7 +3092,7 @@ GameObject:
   - component: {fileID: 797173847}
   - component: {fileID: 797173846}
   m_Layer: 5
-  m_Name: TextGameOver
+  m_Name: TextWinner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4969,7 +4969,7 @@ GameObject:
   - component: {fileID: 1749235316}
   - component: {fileID: 1749235315}
   m_Layer: 5
-  m_Name: TextWinner
+  m_Name: TextGameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
